@@ -12,7 +12,7 @@ package leetcode.twoSum;
  */
 public class Solution3 implements TwoSumSolution {
     public int[] twoSum(int[] nums, int target) {
-        int max = 2047;
+        int max = maxSizeFor(target);
         int temp;
         int[] test = new int[max + 1];
         for (int i = 0; i < nums.length; i++) {
@@ -23,5 +23,17 @@ public class Solution3 implements TwoSumSolution {
             test[nums[i] & max] = i + 1;
         }
         throw new IllegalArgumentException("No two sum solution");
+    }
+
+    private static final int MAXIMUM_CAPACITY = 1 << 30;
+
+    private static int maxSizeFor(int cap) {
+        int n = cap - 1;
+        n |= n >>> 1;
+        n |= n >>> 2;
+        n |= n >>> 4;
+        n |= n >>> 8;
+        n |= n >>> 16;
+        return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY - 1 : n;
     }
 }
