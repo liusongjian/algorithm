@@ -1,6 +1,7 @@
 package tree;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * Binary tree 二叉树
@@ -35,25 +36,27 @@ public class Tree01 {
         node.right.right = new TreeNode(7);
 
         System.out.print("前序遍历\t");
+        node.preTraverseStack(node);
+        System.out.print("前序遍历\t");
         node.preTraverse(node);
-        System.out.println();
-        System.out.print("中序遍历\t");
-        node.inTraverse(node);
-        System.out.println();
-        System.out.print("后序遍历\t");
-        node.postTraverse(node);
-        System.out.println();
-        System.out.print("层序遍历\t");
-        node.levelTraverse(node);
-        System.out.println();
-        System.out.print("左子树高\t");
-        System.out.println(node.height(node.left,0));
-        System.out.println();
-        System.out.print("右子树高\t");
-        System.out.println(node.height(node.right,0));
-        System.out.println();
-        System.out.print("树高差\t");
-        System.out.print(Math.abs(node.height(node.left, 0) - node.height(node.right, 0)));
+//        System.out.println();
+//        System.out.print("中序遍历\t");
+//        node.inTraverse(node);
+//        System.out.println();
+//        System.out.print("后序遍历\t");
+//        node.postTraverse(node);
+//        System.out.println();
+//        System.out.print("层序遍历\t");
+//        node.levelTraverse(node);
+//        System.out.println();
+//        System.out.print("左子树高\t");
+//        System.out.println(node.height(node.left,0));
+//        System.out.println();
+//        System.out.print("右子树高\t");
+//        System.out.println(node.height(node.right,0));
+//        System.out.println();
+//        System.out.print("树高差\t");
+//        System.out.print(Math.abs(node.height(node.left, 0) - node.height(node.right, 0)));
     }
     static class TreeNode{
         int val;
@@ -69,6 +72,27 @@ public class Tree01 {
             current = Math.max(height(root.right,height+1),current);
             return current;
         }
+
+        /**
+         * 先序遍历：栈
+         */
+        public void preTraverseStack(TreeNode root){
+            Stack<TreeNode> stack = new Stack<>();
+            while (root != null || !stack.isEmpty()){
+                while (root != null){
+                    System.out.print(root.val);
+                    stack.push(root);
+                    root = root.left;
+                }
+                if (!stack.isEmpty()){
+                    root = stack.pop();
+                    root = root.right;
+                }
+            }
+        }
+        /**
+         * 先序遍历：递归
+         */
         public void preTraverse(TreeNode root){
             if (root == null) {return ;}
             System.out.print(root.val);
